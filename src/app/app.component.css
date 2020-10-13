@@ -1,0 +1,24 @@
+.container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidenav {
+  padding: 20px;
+}
+
+canvas {
+  transform: scale(0.5);
+  position: absolute;
+  top: -119px;
+  right: -158px;
+  z-index: 2;
+}
