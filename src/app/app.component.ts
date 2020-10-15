@@ -25,10 +25,6 @@ export class AppComponent implements AfterViewInit {
   );
 
   constructor(private _recognizer: HandGesture, private _router: Router) {
-    this._recognizer.swipe$.subscribe((d) => {
-      console.log(d);
-    });
-
     this._recognizer.gesture$
       .pipe(
         filter((value) => value === 'ok'),

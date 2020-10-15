@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import * as handpose from '@tensorflow-models/handpose';
 
 import '@tensorflow/tfjs-backend-webgl';
+import '@tensorflow/tfjs-backend-cpu';
 import { drawKeypoints } from './hand-renderer';
 import { GE } from './fingere-gesture';
 
