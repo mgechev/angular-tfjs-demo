@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import * as handpose from '@tensorflow-models/handpose';
-import * as fingerpose from 'fingerpose';
 
 import '@tensorflow/tfjs-backend-webgl';
+import { drawKeypoints } from './hand-renderer';
+import { GE } from './fingere-gesture';
 
 const GestureMap = {
   thumbs_up: 'ok',
@@ -16,39 +17,6 @@ type Direction = 'left' | 'right' | 'none';
 type Size = [number, number];
 type Point = [number, number];
 type Rect = { topLeft: [number, number]; bottomRight: [number, number] };
-
-const oneFingerGesture = new fingerpose.GestureDescription('one_finger');
-oneFingerGesture.addCurl(
-  fingerpose.Finger.Index,
-  fingerpose.FingerCurl.NoCurl,
-  1.0
-);
-oneFingerGesture.addCurl(
-  fingerpose.Finger.Thumb,
-  fingerpose.FingerCurl.FullCurl,
-  1.0
-);
-oneFingerGesture.addCurl(
-  fingerpose.Finger.Middle,
-  fingerpose.FingerCurl.FullCurl,
-  1.0
-);
-oneFingerGesture.addCurl(
-  fingerpose.Finger.Ring,
-  fingerpose.FingerCurl.FullCurl,
-  1.0
-);
-oneFingerGesture.addCurl(
-  fingerpose.Finger.Pinky,
-  fingerpose.FingerCurl.FullCurl,
-  1.0
-);
-
-const GE = new fingerpose.GestureEstimator([
-  fingerpose.Gestures.VictoryGesture,
-  fingerpose.Gestures.ThumbsUpGesture,
-  oneFingerGesture,
-]);
 
 @Injectable({
   providedIn: 'root',
@@ -195,48 +163,3 @@ export class HandGesture {
   }
 }
 
-const fingerLookupIndices = {
-  thumb: [0, 1, 2, 3, 4],
-  indexFinger: [0, 5, 6, 7, 8],
-  middleFinger: [0, 9, 10, 11, 12],
-  ringFinger: [0, 13, 14, 15, 16],
-  pinky: [0, 17, 18, 19, 20],
-};
-
-function drawPoint(ctx, y, x, r) {
-  ctx.beginPath();
-  ctx.arc(x, y, r, 0, 2 * Math.PI);
-  ctx.fill();
-}
-
-function drawKeypoints(ctx, keypoints) {
-  const keypointsArray = keypoints;
-
-  for (let i = 0; i < keypointsArray.length; i++) {
-    const y = keypointsArray[i][0];
-    const x = keypointsArray[i][1];
-    drawPoint(ctx, x - 2, y - 2, 3);
-  }
-
-  const fingers = Object.keys(fingerLookupIndices);
-  // tslint:disable-next-line: prefer-for-of
-  for (let i = 0; i < fingers.length; i++) {
-    const finger = fingers[i];
-    const points = fingerLookupIndices[finger].map((idx) => keypoints[idx]);
-    drawPath(ctx, points, false);
-  }
-}
-
-function drawPath(ctx, points, closePath) {
-  const region = new Path2D();
-  region.moveTo(points[0][0], points[0][1]);
-  for (let i = 1; i < points.length; i++) {
-    const point = points[i];
-    region.lineTo(point[0], point[1]);
-  }
-
-  if (closePath) {
-    region.closePath();
-  }
-  ctx.stroke(region);
-}

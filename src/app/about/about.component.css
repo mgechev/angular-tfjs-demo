@@ -1,0 +1,14 @@
+a {
+  color: rgb(129, 183, 255);
+  text-decoration: none;
+}
+
+a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+section {
+  max-width: 400px;
+  display: block;
+}

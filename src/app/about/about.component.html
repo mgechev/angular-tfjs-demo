@@ -1,1 +1,21 @@
-<p>about works!</p>
+<h1>About the Demo</h1>
+
+<section>
+  <p>
+    This demo is developed using <a href="https://angular.io">Angular</a> and
+    <a href="https://www.tensorflow.org/js">TensorFlow.js</a>.
+  </p>
+
+  <p>
+    The project is using the
+    <a href="https://github.com/tensorflow/tfjs-models/tree/master/handpose"
+      >handpose</a
+    >
+    model to recognize hands and their features. After that, we pass the output
+    to
+    <a href="https://github.com/andypotato/fingerpose">fingerpose</a> which
+    estimates the hand sign. Once we recognize an action, we emit it via a
+    BehaviorSubject. A component, subscribed to the BehaviorSubject processes
+    the user action.
+  </p>
+</section>

@@ -1,14 +1,40 @@
 <mat-drawer-container class="container" autosize>
-  <mat-drawer [opened]="opened$ | async">
-    <a [class.focus]="(selection$ | async) === 'home'" #home routerLink="home">Home</a>
-    <a [class.focus]="(selection$ | async) === 'about'" #about routerLink="about">About</a>
+  <mat-drawer #drawer [opened]="opened$ | async">
+    <section>
+      <a [class.focus]="(selection$ | async) === 'home'" #home routerLink="home"
+        >Home</a
+      >
+      <a
+        [class.focus]="(selection$ | async) === 'about'"
+        #about
+        routerLink="about"
+        >About</a
+      >
+    </section>
   </mat-drawer>
 
   <div class="sidenav-content">
     <router-outlet></router-outlet>
   </div>
-
 </mat-drawer-container>
 
-<video style="display: none" #video width="640" height="480" autoplay [srcObject]="stream"></video>
+<button
+  class="hamburger hamburger--slider"
+  [class.is-active]="drawer.opened"
+  type="button"
+  (click)="drawer.toggle()"
+>
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+
+<video
+  style="display: none"
+  #video
+  width="640"
+  height="480"
+  autoplay
+  [srcObject]="stream"
+></video>
 <canvas #canvas width="640" height="480"></canvas>
