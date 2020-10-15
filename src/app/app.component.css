@@ -22,3 +22,16 @@ canvas {
   right: -158px;
   z-index: 2;
 }
+
+.container a {
+  display: block;
+  font-size: 2em;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 10px;
+}
+
+.container a.focus {
+  background-color: #ccc;
+}

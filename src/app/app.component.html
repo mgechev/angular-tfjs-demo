@@ -1,10 +1,11 @@
 <mat-drawer-container class="container" autosize>
   <mat-drawer [opened]="opened$ | async">
-    <p>Auto-resizing sidenav</p>
+    <a [class.focus]="(selection$ | async) === 'home'" #home routerLink="home">Home</a>
+    <a [class.focus]="(selection$ | async) === 'about'" #about routerLink="about">About</a>
   </mat-drawer>
 
   <div class="sidenav-content">
-    Toggle sidenav
+    <router-outlet></router-outlet>
   </div>
 
 </mat-drawer-container>
